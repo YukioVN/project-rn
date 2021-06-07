@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
+import axios from 'axios';
 import { 
   Container, 
   KeyboardView, 
@@ -13,8 +14,6 @@ import {
 
 } from './styles';
 
-import Api from '../../Api';
-
 export default () => {
   const navigation = useNavigation();
 
@@ -22,9 +21,23 @@ export default () => {
   const [passwordField, setPasswordField] = useState('');
 
   const handleSignClick = async () => {
+
+    const BASE_URL = '';
     if(emailField != '' && passwordField != '') {
-      alert("Login efetuado com sucesso");
-      
+      axios.post(`${BASE_URL}/login`, {
+        email: emailField,
+        password: passwordField
+      })
+      .then(function (response) {
+        alert("Login efetuado com sucesso");
+      })
+      .catch(function (error) {
+        console.log(error);
+        if(error.response.status === 409) {
+          alert("Email não existe");
+          console.log("Email não existe");
+        }
+      });
     } else {
       alert("Preencha os campos")
     }
