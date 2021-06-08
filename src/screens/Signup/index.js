@@ -11,7 +11,6 @@ import {
   SignMessageButton,
   SignMessageButtonText,
   SignMessageButtonTextBold
-
 } from './styles';
 
 export default () => {
@@ -21,21 +20,25 @@ export default () => {
   const [passwordField, setPasswordField] = useState('');
 
   const handleSignClick = async () => {
-
+    /*
+    Colocar o IP (IPV4) do dispositivo na BASE_URL
+    Exemplo: http://192.168.X.X:3000
+    :3000 vem do server localhost:3000
+    */
     const BASE_URL = '';
     if(emailField != '' && passwordField != '') {
-      axios.post(`${BASE_URL}/login`, {
+      axios.post(`${BASE_URL}/signup`, {
         email: emailField,
         password: passwordField
       })
       .then(function (response) {
-        alert("Login efetuado com sucesso");
+        alert("Cadastro efetuado com sucesso");
       })
       .catch(function (error) {
         console.log(error);
         if(error.response.status === 409) {
-          alert("Email não existe");
-          console.log("Email não existe");
+          alert("Usuário existente");
+          console.log("Usuário existente");
         }
       });
     } else {
@@ -45,14 +48,14 @@ export default () => {
 
   const handleMessageButtonClick = () => {
     navigation.reset({
-      routes: [{name: 'SignUp'}]
+      routes: [{name: 'SignIn'}]
     });
   }
 
   return(
     <KeyboardView>
       <Container>
-        <Title>Login</Title>
+        <Title>Cadastro</Title>
         <Input 
           placeholder="Email" 
           value={emailField}
@@ -64,11 +67,11 @@ export default () => {
           onChangeText={t=>setPasswordField(t)}  
         />
         <ButtonSubmit onPress={handleSignClick}>
-          <TextSubmit>Entrar</TextSubmit>
+          <TextSubmit>Cadastrar</TextSubmit>
         </ButtonSubmit>
         <SignMessageButton onPress={handleMessageButtonClick}>
-        <SignMessageButtonText>Ainda não possui uma conta?</SignMessageButtonText>
-        <SignMessageButtonTextBold>Cadastre-se</SignMessageButtonTextBold>
+        <SignMessageButtonText>Já possui uma conta?</SignMessageButtonText>
+        <SignMessageButtonTextBold>Faça Login</SignMessageButtonTextBold>
       </SignMessageButton>
       </Container>
     </KeyboardView>
