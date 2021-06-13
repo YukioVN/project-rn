@@ -2,6 +2,9 @@
 
 Projeto para se familiarizar com o React-native, React-navigation (V5).
 
+<h4 align="center"> 
+	 Status: Em construção
+</h4>
 ---
 
 ## 🎨 Layout
